@@ -11,6 +11,12 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
+      - name: Fix Ghidorah Pair error
+        run: |
+          F=src/main/java/com/kaiju/entity/GhidorahEntity.java
+          sed -i 's/Pair<BlockPos, ?> r = /var r = /' $F
+          sed -i '/import net.minecraft.util.Pair;/d' $F
+          grep -n "locateBiome" $F
       - uses: gradle/actions/setup-gradle@v3
         with:
           gradle-version: 8.5
